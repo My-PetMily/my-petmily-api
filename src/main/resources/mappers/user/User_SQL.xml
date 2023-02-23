@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+description : 유저 관련 SQL
+fileName    : User_SQL.xml
+author      : Gong sujeong
+date        : 2023-02-23
+==================================================
+DATE            AUTHOR          NOTE
+==================================================
+2023-02-23     Gong sujeong       최초 작성
+-->
+<mapper namespace="com.family.mypetmily.user.mapper.UserMapper">
+
+	<select id="selectCountNickname" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM user
+		WHERE
+			nickname = #{nickname}
+	</select>
+
+</mapper>
