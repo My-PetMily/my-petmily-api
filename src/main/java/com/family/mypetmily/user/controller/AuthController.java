@@ -12,12 +12,9 @@ import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.constraints.Pattern;
 
 /**
  * description      : 유저 관련 인증 컨트롤러
@@ -49,7 +46,7 @@ public class AuthController {
 			@ApiResponse(code = 200, message = "조회 성공")
 	})
 	@GetMapping("/nickname")
-	public ResponseEntity<ApiResponseDto> checkNickname(@RequestParam("nickname") @Pattern(regexp = "[\\d\\w\\_\\-\\.]{2,20}") final String nickname, BindingResult bindingResult) {
+	public ResponseEntity<ApiResponseDto> checkNickname(@RequestParam("nickname") final String nickname) {
 		ApiResponseDto response = null;
 
 		try {
@@ -59,6 +56,43 @@ public class AuthController {
 			} else {
 				response = new ApiResponseDto("200", "이미 사용중인 닉네임 입니다.");
 				log.info("중복되는 nickname 입니다. nickname = [{}]", nickname);
+			}
+		} catch (ValueException e) {
+			if (e.getCause() instanceof EmptyValueException) {
+				EmptyValueException emptyValueException = (EmptyValueException) e.getCause();
+				response = new ApiResponseDto(emptyValueException.getCode(), emptyValueException.getMessage());
+			} else if (e.getCause() instanceof InvalidValueException) {
+				InvalidValueException invalidValueException = (InvalidValueException) e.getCause();
+				response = new ApiResponseDto(invalidValueException.getCode(), invalidValueException.getMessage());
+			} else {
+				response = new ApiResponseDto(e.getCode(), e.getMessage());
+			}
+			return ResponseEntity.badRequest().body(response);
+		}
+
+		return ResponseEntity.ok().body(response);
+	}
+
+	/**
+	 * 이메일 중복 테스트
+	 *
+	 * @param email 테스트 할 이메일
+	 * @return 결과
+	 */
+	@ApiOperation(value = "이메일 중복 조회 API", notes = "이메일을 변경하기 전에 사용하는 사람이 있는지 확인 해 볼 수 있는 API")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "조회 성공")
+	})
+	@GetMapping("/email")
+	public ResponseEntity<ApiResponseDto> checkEmail(@RequestParam("email") final String email) {
+		ApiResponseDto response = null;
+		try {
+			if (authService.canUseEmail(email)) {
+				response = new ApiResponseDto("200", "사용해도 좋습니다.");
+				log.info("사용해도 좋은 email 입니다. email = [{}]", email);
+			} else {
+				response = new ApiResponseDto("200", "이미 사용중인 이메일 입니다.");
+				log.info("중복되는 email 입니다. email = [{}]", email);
 			}
 		} catch (ValueException e) {
 			if (e.getCause() instanceof EmptyValueException) {
