@@ -21,4 +21,12 @@ public interface AuthService {
 	 * @return 사용 가능 여부
 	 */
 	boolean canUseNickname(String nickname) throws ValueException;
+
+	/**
+	 * 사용 가능한 이메일
+	 *
+	 * @param email 확인할 이메일
+	 * @return 사용 가능 여부
+	 */
+	boolean canUseEmail(String email) throws ValueException;
 }

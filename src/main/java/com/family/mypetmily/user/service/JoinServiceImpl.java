@@ -36,11 +36,16 @@ public class JoinServiceImpl implements JoinService {
 		Map<String, Object> result = new HashMap<>();
 		if (authService.canUseNickname(user.getNickname()) == false) {
 			result.put("result", "fail");
-			result.put("nickname", "중복됩니다.");
-			return result;
+			result.put("nickname", "사용할 수 없는 닉네임 입니다.");
+		}
+		if (authService.canUseEmail(user.getEmail()) == false) {
+			result.put("result", "fail");
+			result.put("email", "사용할 수 없는 이메일 입니다.");
 		}
 
-		//todo 이메일 중복확인도 추가해야함
+		if ("fail".equals(result.get("result"))) {
+			return result;
+		}
 
 		int insertCount = userMapper.insertUser(user);
 		if (insertCount != 1) {

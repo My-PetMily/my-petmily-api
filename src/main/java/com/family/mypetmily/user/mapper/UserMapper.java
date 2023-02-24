@@ -18,6 +18,9 @@ public interface UserMapper {
 	/** nickname의 개수 조회 */
 	int selectCountNickname(String nickname);
 
+	/** email의 개수 조회 */
+	int selectCountEmail(String Email);
+
 	/**
 	 * 유저 추가
 	 *

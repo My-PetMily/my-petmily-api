@@ -23,4 +23,14 @@ public class RegexValidUtil {
 	static public boolean checkNickname(String nickname) {
 		return nickname.matches("[\\d\\w\\_\\-\\.]{2,20}");
 	}
+
+	/**
+	 * 이메일 정규식 검사
+	 *
+	 * @param email 이메일
+	 * @return
+	 */
+	static public boolean checkEmail(String email) {
+		return email.matches("[\\w\\d\\-\\_]+\\@[\\w]+\\.[\\w]+(\\.[\\w]+){0,1}");
+	}
 }

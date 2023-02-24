@@ -20,6 +20,14 @@ DATE            AUTHOR          NOTE
 			nickname = #{nickname}
 	</select>
 
+	<select id="selectCountEmail" parameterType="String" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM user
+		WHERE
+			email = #{email}
+	</select>
+
 	<insert id="insertUser" parameterType="com.family.mypetmily.user.model.User" useGeneratedKeys="true" keyProperty="userSeq">
 		INSERT
 		INTO
