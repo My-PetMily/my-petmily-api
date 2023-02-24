@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
 			throw error;
 		}
 
-		if (RegexValidUtil.checkNickname(nickname)) {
+		if (!RegexValidUtil.checkNickname(nickname)) {
 			log.error("nickname InvalidValue Error. nickname = [{}]", nickname);
 			ValueException error = new ValueException();
 			InvalidValueException causeError = new InvalidValueException("nickname", nickname);

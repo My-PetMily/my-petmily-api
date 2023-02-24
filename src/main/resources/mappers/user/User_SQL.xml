@@ -20,4 +20,26 @@ DATE            AUTHOR          NOTE
 			nickname = #{nickname}
 	</select>
 
+	<insert id="insertUser" parameterType="com.family.mypetmily.user.model.User" useGeneratedKeys="true" keyProperty="userSeq">
+		INSERT
+		INTO
+			user(
+					  user_seq
+					, user_type
+					, email
+					, nickname
+					, password
+					, create_date
+				)
+		VALUES
+			(
+				  NULL
+				, #{type}
+				, #{email}
+				, #{nickname}
+				, #{password}
+				, #{createDate}
+			)
+	</insert>
+
 </mapper>

@@ -1,5 +1,6 @@
 package com.family.mypetmily.user.mapper;
 
+import com.family.mypetmily.user.model.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -16,4 +17,12 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
 	/** nickname의 개수 조회 */
 	int selectCountNickname(String nickname);
+
+	/**
+	 * 유저 추가
+	 *
+	 * @param user 추가할 유저
+	 * @return 추가된 유저의 수
+	 */
+	int insertUser(User user);
 }
