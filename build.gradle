@@ -14,9 +14,14 @@ configurations {
     }
 }
 
+bootJar {
+    mainClass = 'com.family.mypetmily.MyPetMilyApplication'
+}
+
 repositories {
     mavenCentral()
 }
+
 
 dependencies {
     implementation 'org.mybatis:mybatis:3.5.11'
