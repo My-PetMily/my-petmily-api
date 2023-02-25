@@ -173,3 +173,6 @@ $RECYCLE.BIN/
 .dbeaver-data-sources*.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,windows,java
+
+## 계정 파일
+/src/main/resources/security.properties
