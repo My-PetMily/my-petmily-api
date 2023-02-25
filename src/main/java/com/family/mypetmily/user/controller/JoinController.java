@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -45,7 +46,7 @@ public class JoinController {
 			@ApiResponse(code = 200, message = "회원가입 성공")
 	})
 	@PostMapping(value = "")
-	public ResponseEntity join(@Validated final JoinRequestFormDto joinRequestFormDto, BindingResult bindingResult) {
+	public ResponseEntity join(@Validated @RequestBody final JoinRequestFormDto joinRequestFormDto, BindingResult bindingResult) {
 
 		ApiResponseDto result = null;
 		if (bindingResult.hasErrors()) {
