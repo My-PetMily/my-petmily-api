@@ -1,5 +1,8 @@
 package com.family.mypetmily.user.controller;
 
+import com.family.mypetmily.mail.model.SendMailDto;
+import com.family.mypetmily.mail.model.SendMailMessageFormat;
+import com.family.mypetmily.mail.service.inter.MailSendService;
 import com.family.mypetmily.response.model.ApiResponseDto;
 import com.family.mypetmily.user.service.inter.AuthService;
 import com.family.mypetmily.validation.exception.EmptyValueException;
@@ -15,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.mail.MessagingException;
+import java.util.UUID;
 
 /**
  * description      : 유저 관련 인증 컨트롤러
@@ -34,6 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class AuthController {
 	private final AuthService authService;
+	private final MailSendService mailSendService;
 
 	/**
 	 * 닉네임 중복 테스트
@@ -107,6 +114,22 @@ public class AuthController {
 			return ResponseEntity.badRequest().body(response);
 		}
 
+		return ResponseEntity.ok().body(response);
+	}
+
+	@GetMapping("/auth-code")
+	public ResponseEntity<ApiResponseDto> sendAuthCodeMail(@RequestParam("email") final String email) {
+		ApiResponseDto response = null;
+
+		try {
+			String code = String.format("%.6s", UUID.randomUUID());
+			SendMailDto authCodeMail = new SendMailDto(new String[]{code}, email, "UTF-8", SendMailMessageFormat.JOIN_AUTH_CODE);
+			mailSendService.sendAuthMail(authCodeMail);
+			response = new ApiResponseDto("200", "인증 코드 메일 전송에 성공했습니다.");
+		} catch (MessagingException e) {
+			// 발송 실패에 원인을 리턴 받을 수 없고, 발송 실패인지에 대해 정확하게 알 수 없음
+			response = new ApiResponseDto("200", "인증 코드 메일 전송 중 오류가 발생했습니다.");
+		}
 		return ResponseEntity.ok().body(response);
 	}
 }

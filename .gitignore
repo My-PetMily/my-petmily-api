@@ -176,3 +176,4 @@ $RECYCLE.BIN/
 
 ## 계정 파일
 /src/main/resources/security.properties
+/src/main/resources/security-dev.properties
