@@ -14,9 +14,14 @@ configurations {
     }
 }
 
+bootJar {
+    mainClass = 'com.family.mypetmily.MyPetMilyApplication'
+}
+
 repositories {
     mavenCentral()
 }
+
 
 dependencies {
     implementation 'org.mybatis:mybatis:3.5.11'
@@ -35,7 +40,8 @@ dependencies {
     //validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     //swagger
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.8'
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
     //slf4j
     implementation 'org.slf4j:jcl-over-slf4j'
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
