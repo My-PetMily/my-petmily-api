@@ -2,6 +2,7 @@ package com.family.mypetmily.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -17,6 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
 	/** 유저 고유번호 */
 	private int userSeq;

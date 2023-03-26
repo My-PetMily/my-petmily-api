@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><!--
 description : 유저 관련 SQL
 fileName    : User_SQL.xml
 author      : Gong sujeong
@@ -15,30 +13,29 @@ DATE            AUTHOR          NOTE
 	<select id="selectCountNickname" parameterType="String" resultType="int">
 		SELECT
 			COUNT(*)
-		FROM user
-		WHERE
-			nickname = #{nickname}
+		FROM
+			user
+		WHERE nickname = #{nickname}
 	</select>
 
 	<select id="selectCountEmail" parameterType="String" resultType="int">
 		SELECT
 			COUNT(*)
-		FROM user
-		WHERE
-			email = #{email}
+		FROM
+			user
+		WHERE email = #{email}
 	</select>
 
 	<insert id="insertUser" parameterType="com.family.mypetmily.user.model.User" useGeneratedKeys="true" keyProperty="userSeq">
-		INSERT
-		INTO
+		INSERT INTO
 			user(
-					  user_seq
-					, user_type
-					, email
-					, nickname
-					, password
-					, create_date
-				)
+			          user_seq
+				    , user_type
+				    , email
+				    , nickname
+				    , password
+				    , create_date
+			    )
 		VALUES
 			(
 				  NULL
@@ -49,5 +46,26 @@ DATE            AUTHOR          NOTE
 				, #{createDate}
 			)
 	</insert>
+
+	<select id="selectUserByEmail" parameterType="String" resultType="com.family.mypetmily.user.model.User">
+		SELECT
+			user_seq    AS userSeq
+		  , user_type   AS type
+		  , email       AS email
+		  , nickname    AS nickname
+		  , password    AS password
+		  , create_date AS createDate
+		FROM
+			user
+		WHERE email = #{email}
+	</select>
+
+	<update id="updateUserPassword" parameterType="com.family.mypetmily.user.model.User">
+		UPDATE user
+		SET
+			password = #{password}
+		WHERE user_seq = #{userSeq}
+
+	</update>
 
 </mapper>

@@ -44,7 +44,7 @@ class MailSendServiceTest {
 		//when
 		MessagingException exception = null;
 		try {
-			mailSendService.sendAuthMail(sendMail);
+			mailSendService.sendMail(sendMail);
 		} catch (MessagingException e) {
 			exception = e;
 			System.out.println("메일 전송 오류");

@@ -117,6 +117,14 @@ public class AuthController {
 		return ResponseEntity.ok().body(response);
 	}
 
+	/**
+	 * 이메일 인증 전송 하는 API
+	 *
+	 * @param email 대상 이메일
+	 * @return
+	 */
+	@ApiOperation(value = "이메일 인증코드 전송 요청 API", notes = "이메일 인증 코드를 전송하는 API, 존재하지 않는 메일이라도 응답 값으로 알 수 없습니다.")
+	@ApiResponses({@ApiResponse(code = 200, message = "전송 성공")})
 	@GetMapping("/auth-code")
 	public ResponseEntity<ApiResponseDto> sendAuthCodeMail(@RequestParam("email") final String email) {
 		ApiResponseDto response = null;
@@ -124,7 +132,7 @@ public class AuthController {
 		try {
 			String code = String.format("%.6s", UUID.randomUUID());
 			SendMailDto authCodeMail = new SendMailDto(new String[]{code}, email, "UTF-8", SendMailMessageFormat.JOIN_AUTH_CODE);
-			mailSendService.sendAuthMail(authCodeMail);
+			mailSendService.sendMail(authCodeMail);
 			response = new ApiResponseDto("200", "인증 코드 메일 전송에 성공했습니다.");
 		} catch (MessagingException e) {
 			// 발송 실패에 원인을 리턴 받을 수 없고, 발송 실패인지에 대해 정확하게 알 수 없음

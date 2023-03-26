@@ -15,5 +15,5 @@ import javax.mail.MessagingException;
  * 2023-03-16       SuJeong Gong        최초작성
  */
 public interface MailSendService {
-	void sendAuthMail(SendMailDto sendMail) throws MessagingException;
+	void sendMail(SendMailDto sendMail) throws MessagingException;
 }

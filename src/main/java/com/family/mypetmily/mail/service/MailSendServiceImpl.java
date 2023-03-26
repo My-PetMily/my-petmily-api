@@ -34,12 +34,12 @@ public class MailSendServiceImpl implements MailSendService {
 	}
 
 	@Override
-	public void sendAuthMail(SendMailDto sendMail) throws MessagingException {
+	public void sendMail(SendMailDto sendMail) throws MessagingException {
 		MimeMessage mail = mailSender.createMimeMessage();
-		mail.setHeader("Content-Type", "text/plain; charset=utf-8");
+		mail.setHeader("Content-Type", "text/html; charset=utf-8");
 		mail.addRecipients(Message.RecipientType.TO, sendMail.getToEmail());
 		mail.setSubject(sendMail.getTitle());
-		mail.setText(sendMail.getContent(), sendMail.getEncoding());
+		mail.setContent(sendMail.getContent(), String.format("text/html; charset=%s", sendMail.getEncoding()));
 		mail.setFrom(FROM_MAIL);
 		mailSender.send(mail);
 		return;
